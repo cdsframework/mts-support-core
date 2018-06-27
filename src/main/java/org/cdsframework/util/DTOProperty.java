@@ -408,5 +408,12 @@ public class DTOProperty {
                 .append(dtoValueMap.toString())
                 .append("}")).toString();
     }
+    
+    public static Object getEnumValue(BaseDTO baseDTO, String propertyName, Object value) throws NoSuchFieldException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Field field = baseDTO.getClass().getDeclaredField(propertyName);
+        field.setAccessible(true);
+        Method enumGetter = DTOProperty.getEnumGetter(field);
+        return enumGetter.invoke(value);
+    }
 
 }
