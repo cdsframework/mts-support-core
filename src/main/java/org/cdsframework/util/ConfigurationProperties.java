@@ -55,49 +55,59 @@ public class ConfigurationProperties {
                 tmpInstancePropertiesStream = ConfigurationProperties.class.getResourceAsStream(instanceName);
                 logger.info(METHODNAME, "third attempt: tmpInstancePropertiesStream=", tmpInstancePropertiesStream);
             }
-            if (tmpInstancePropertiesStream == null) {
+        }
+        
+        // If null throw exception based on value of failOnNotFound
+        if (tmpInstancePropertiesStream == null) {
+            if ( failOnNotFound ) {
                 throw new IllegalArgumentException("tmpInstancePropertiesStream was null!");
             }
         }
-        Properties tmpInstanceProperties = new Properties();
-        try {
-            tmpInstanceProperties.load(tmpInstancePropertiesStream);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+        else {
+            Properties tmpInstanceProperties = new Properties();
+            try {
+                tmpInstanceProperties.load(tmpInstancePropertiesStream);
+            } catch (IOException e) {
+                throw new IllegalArgumentException(e);
+            }
 
-        //
-        // This is the application instance root, retrieve the system property name that contains 
-        // the instance root path for this application server
-        //
-        String instanceDirSystem = tmpInstanceProperties.getProperty(instanceDirSystemName);
-        logger.info(METHODNAME, "instanceDirSystem=", instanceDirSystem);
+            //
+            // This is the application instance root, retrieve the system property name that contains 
+            // the instance root path for this application server
+            //
+            String instanceDirSystem = tmpInstanceProperties.getProperty(instanceDirSystemName);
+            logger.info(METHODNAME, "instanceDirSystem=", instanceDirSystem);
 
-        // Get the system property
-        String instanceRoot = System.getProperty(instanceDirSystem);
-        // Append the relative path of the property file to the instance root location
-        String propertiesUri = instanceRoot + "/" + tmpInstanceProperties.getProperty(instancePropertyUriName);
-        logger.info(METHODNAME, "Reading propertiesUri properties from: ", propertiesUri);
-        
-        // load the properties from the property file location
-        try {
-            // Check if file exists
-            boolean fileExists = true;
-            if (!failOnNotFound) {
-                fileExists = Files.exists(Paths.get(propertiesUri));
-            }
+            // Get the system property
+            String instanceRoot = System.getProperty(instanceDirSystem);
+            // Append the relative path of the property file to the instance root location
+            String propertiesUri = instanceRoot + "/" + tmpInstanceProperties.getProperty(instancePropertyUriName);
+            logger.info(METHODNAME, "Reading propertiesUri properties from: ", propertiesUri);
+
+            // load the properties from the property file location
+            try {
+                // Check if file exists
+                boolean fileExists = true;
+                if (!failOnNotFound) {
+                    fileExists = Files.exists(Paths.get(propertiesUri));
+                }
+
+                // File exists
+                if (fileExists) {
+                    // Will throw an error when file does not exist
+                    properties.load(new FileInputStream(propertiesUri));
+                }
+                else {
+                    logger.warn(METHODNAME, "propertiesUri=", propertiesUri, " was NOT found");
+                }
+                
+                // Close stream
+                tmpInstancePropertiesStream.close();
+
+            } catch (IOException e) {
+                throw new IllegalArgumentException(e);
+            }   
             
-            // File exists
-            if (fileExists) {
-                // Will throw an error when file does not exist
-                properties.load(new FileInputStream(propertiesUri));
-            }
-            else {
-                logger.warn(METHODNAME, "propertiesUri=", propertiesUri, " was NOT found");
-            }
-            
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
         }
     }
     

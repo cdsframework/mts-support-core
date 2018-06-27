@@ -295,7 +295,7 @@ public class CommonRsUtils {
                         sValue = DateUtils.getFormattedDate((Date) oValue, DateUtils.ISO8601_DATETIME_FORMAT);
                         //sValue = DateUtils.getFormattedDate((Date) oValue, DateUtils.ISO8601_UTC_DATETIME);
                     } else {
-                        sValue = oValue.toString().replaceAll("(?<!\\\\),", "\\,");
+                        sValue = oValue.toString().replaceAll("\\,", "\\\\,");
                     }
                     if (urlEncode) {
                         sValue = URLEncoder.encode(sValue);
