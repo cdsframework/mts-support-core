@@ -1056,6 +1056,20 @@ public class DateUtils {
         
         return formattedDate;
     }    
-    
+
+    public static String getTimeFromDate(Date date, String timeFormat) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(timeFormat);
+        return simpleDateFormat.format(date.getTime());
+    }
+    public static String getTimeFromDate(Date date) {
+        return getTimeFromDate(date, "HH:mm:ss");
+    }
+    public static boolean isDateStartOfDay(Date date) {
+        boolean startOfDay = true;
+        if (date != null) {
+            startOfDay = getTimeFromDate(date).equals("00:00:00");
+        }
+        return startOfDay;
+    }
     
 }

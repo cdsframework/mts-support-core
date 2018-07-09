@@ -26,80 +26,124 @@
  */
 package org.cdsframework.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
 import org.cdsframework.annotation.JndiReference;
-import org.cdsframework.annotation.OrderBy;
 import org.cdsframework.annotation.Permission;
-import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;
 import org.cdsframework.enumeration.GenerationSource;
-import org.cdsframework.util.comparator.SecuritySchemeRelMapComparator;
+import org.cdsframework.enumeration.NotificationStatus;
+import org.cdsframework.enumeration.NotificationType;
 
 /**
- * Provides a data transfer object for a security scheme relationship mapping object.
  *
- * @author HLN Consulting, LLC
+ * @author sdn
  */
 @Entity
-@OrderBy(comparator = SecuritySchemeRelMapComparator.class, fields = "last_mod_datetime")
-@Table(databaseId = "MTS", name = "mt_security_scheme_rel_map")
+@Table(databaseId = "MTS", name = "notification_log")
 @JndiReference(root = "mts-ejb-core")
-@Permission(name = "Security Scheme Relationship Map")
-@XmlRootElement(name = "SecuritySchemeMap")
-public class SecuritySchemeRelMapDTO extends BaseDTO {
+@Permission(name = "Notification Log")
+@XmlRootElement(name = "NotificationLog")
+public class NotificationLogDTO extends BaseDTO {
 
-    public interface BySchemeId {
+    private static final long serialVersionUID = -2396930750106409727L;
+
+    public interface ByNotificationId {
     }
-    private static final long serialVersionUID = 8621785246018062619L;
-    @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = SecuritySchemeDTO.class)
+
+    @GeneratedValue(source = GenerationSource.AUTO)
     @Id
-    private String schemeId;
-    @ReferenceDTO
-    @Id
-    @Column(name = "rel_scheme_id")
-    private SecuritySchemeDTO relatedSecuritySchemeDTO = new SecuritySchemeDTO();
+    @Size(max = 32)
+    private String logId;
+    @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = NotificationDTO.class)
+    private String notificationId;
+    @NotNull
+    private NotificationStatus status;
+    @NotNull
+    @Column(name = "notification_type")
+    private NotificationType type;
 
     /**
-     * Get the value of schemeId
+     * Get the value of type
      *
-     * @return the value of schemeId
+     * @return the value of type
      */
-    public String getSchemeId() {
-        return schemeId;
+    public NotificationType getType() {
+        return type;
     }
 
     /**
-     * Set the value of schemeId
+     * Set the value of type
      *
-     * @param schemeId new value of schemeId
+     * @param type new value of type
      */
     @PropertyListener
-    public void setSchemeId(String schemeId) {
-        this.schemeId = schemeId;
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 
     /**
-     * Returns the related scheme DTO.
+     * Get the value of status
      *
-     * @return the related scheme DTO.
+     * @return the value of status
      */
-    public SecuritySchemeDTO getRelatedSecuritySchemeDTO() {
-        return relatedSecuritySchemeDTO;
+    public NotificationStatus getStatus() {
+        return status;
     }
 
     /**
-     * Sets the related scheme DTO.
+     * Set the value of status
      *
-     * @param relatedSecuritySchemeDTO the scheme DTO.
+     * @param status new value of status
      */
     @PropertyListener
-    public void setRelatedSecuritySchemeDTO(SecuritySchemeDTO relatedSecuritySchemeDTO) {
-        this.relatedSecuritySchemeDTO = relatedSecuritySchemeDTO;
+    public void setStatus(NotificationStatus status) {
+        this.status = status;
     }
+
+    /**
+     * Get the value of notificationId
+     *
+     * @return the value of notificationId
+     */
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    /**
+     * Set the value of notificationId
+     *
+     * @param notificationId new value of notificationId
+     */
+    @PropertyListener
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    /**
+     * Get the value of logId
+     *
+     * @return the value of logId
+     */
+    public String getLogId() {
+        return logId;
+    }
+
+    /**
+     * Set the value of logId
+     *
+     * @param logId new value of logId
+     */
+    @PropertyListener
+    public void setLogId(String logId) {
+        this.logId = logId;
+    }
+
 }
