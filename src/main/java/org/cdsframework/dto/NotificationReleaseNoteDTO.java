@@ -59,7 +59,7 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
     @Id
     @Size(max = 32)
     private String noteId;
-    @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = NotificationDTO.class)
+    @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = {NotificationDTO.class, NotificationStateDTO.class})
     private String notificationId;
     @NotNull
     @Size(max = 512)
