@@ -26,10 +26,10 @@
  */
 package org.cdsframework.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.SortColumn;
 import org.cdsframework.annotation.GeneratedValue;
@@ -59,6 +59,7 @@ import org.cdsframework.util.comparator.SecuritySchemeComparator;
 @Table(databaseId = "MTS", name = "mt_security_scheme")
 @JndiReference(root = "mts-ejb-core", remote = "SchemeMGR")
 @Permission(name = "Security Scheme")
+@XmlRootElement(name = "SecurityScheme")
 public class SecuritySchemeDTO extends BaseDTO {
 
     public interface BySchemeName {

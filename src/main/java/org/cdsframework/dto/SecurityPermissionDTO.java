@@ -27,6 +27,7 @@
 package org.cdsframework.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.EnumAccess;
@@ -52,6 +53,7 @@ import org.cdsframework.util.comparator.SecurityPermissionComparator;
 @Table(databaseId = "MTS", name = "mt_security_scheme_perm_map")
 @JndiReference(root = "mts-ejb-core")
 @Permission(name = "Security Permission")
+@XmlRootElement(name = "SecurityPermission")
 public class SecurityPermissionDTO extends BaseDTO {
 
     public interface BySchemeId {
