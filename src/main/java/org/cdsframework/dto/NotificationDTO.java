@@ -78,7 +78,6 @@ public class NotificationDTO extends BaseDTO {
     @NotNull
     @Size(max = 512)
     private String name;
-    @NotNull
     @Size(max = 4096)
     private String description;
     @NotNull
@@ -86,10 +85,8 @@ public class NotificationDTO extends BaseDTO {
     @Column(name = "notification_type")
     private NotificationType type;
     private Date notificationTime;
-    @NotNull
     @Size(max = 512)
     private String messageTitle;
-    @NotNull
     @Size(max = 4096)
     private String messageBody;
 
