@@ -27,14 +27,18 @@
 package org.cdsframework.dto;
 
 import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
 import org.cdsframework.annotation.JndiReference;
+import org.cdsframework.annotation.ParentChildRelationship;
+import org.cdsframework.annotation.ParentChildRelationships;
 import org.cdsframework.annotation.Permission;
 import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.annotation.Table;
@@ -50,6 +54,9 @@ import org.cdsframework.enumeration.NotificationType;
  * @author sdn
  */
 @Entity
+@ParentChildRelationships({
+    @ParentChildRelationship(childDtoClass = NotificationReleaseNoteDTO.class, childQueryClass = NotificationReleaseNoteDTO.ByNotificationId.class, isAutoRetrieve = false)
+})
 @Table(databaseId = "MTS", name = "notification_state", view = "vw_notification_state")
 @JndiReference(root = "mts-ejb-core")
 @Permission(name = "Notification State")
@@ -305,5 +312,10 @@ public class NotificationStateDTO extends BaseDTO {
     @PropertyListener
     public void setStateId(String stateId) {
         this.stateId = stateId;
+    }
+
+    @XmlElementRef(name = "notificationReleaseNotes")
+    public List<NotificationReleaseNoteDTO> getNotificationReleaseNoteDTOs() {
+        return (List) this.getChildrenDTOs(NotificationReleaseNoteDTO.ByNotificationId.class);
     }
 }
