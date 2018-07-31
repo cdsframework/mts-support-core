@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.cdsframework.annotation.Audit;
-import org.cdsframework.annotation.Cached;
 import org.cdsframework.annotation.SortColumn;
 import org.cdsframework.annotation.ColumnSubstitutions;
 import org.cdsframework.annotation.DTOWrapper;
@@ -950,11 +949,6 @@ public class DTOUtils {
     }
 
     // cache this?
-    public static boolean isCached(Class<? extends BaseDTO> dtoClass) {
-        return dtoClass.isAnnotationPresent(Cached.class);
-    }
-
-    // cache this?
     public static boolean isEntity(Class<? extends BaseDTO> dtoClass) {
         if (dtoClass == null) {
             logger.warn("isEntity - dtoClass is null!");
@@ -1710,11 +1704,6 @@ public class DTOUtils {
 
     public static Audit getAudit(Class<? extends BaseDTO> dtoClass) {
         return dtoClass.getAnnotation(Audit.class);
-    }
-
-    // TODO: cache this
-    public static Cached getCached(Class<? extends BaseDTO> dtoClass) {
-        return dtoClass.getAnnotation(Cached.class);
     }
 
     // TODO: cache this

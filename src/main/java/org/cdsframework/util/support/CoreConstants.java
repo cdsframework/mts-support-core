@@ -28,7 +28,6 @@ package org.cdsframework.util.support;
 
 import java.util.List;
 import org.cdsframework.dto.AppDTO;
-import org.cdsframework.dto.SecurityPermissionDTO;
 import org.cdsframework.dto.SecuritySchemeDTO;
 import org.cdsframework.dto.SessionDTO;
 import org.cdsframework.util.LogUtils;
@@ -39,7 +38,7 @@ import org.cdsframework.util.LogUtils;
  * @author HLN Consulting, LLC
  */
 public class CoreConstants {
-    private static LogUtils logger = LogUtils.getLogger(CoreConstants.class);
+    private static final LogUtils logger = LogUtils.getLogger(CoreConstants.class);
     public static final String CAT_APPLICATION = "CAT";
     public static final String NEW_LINE = String.format("%n");
 
