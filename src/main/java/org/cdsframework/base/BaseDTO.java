@@ -64,7 +64,6 @@ import org.cdsframework.util.support.CorePropertyChangeEvent;
  *
  * - Class/Type Level:
  *
- * @Cached - cache this DTO type in the local cache manager
  * @JndiReference - set the JNDI lookup base for a manager and the object names for the remote, DAO and BO
  * @Lookup - this DTO type doesn't not have a MGR or BO - use generic classes
  * @OrderBy - used to set a default comparator for the DTO
