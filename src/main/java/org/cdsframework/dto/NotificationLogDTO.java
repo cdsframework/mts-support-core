@@ -64,11 +64,30 @@ public class NotificationLogDTO extends BaseDTO {
     private String logId;
     @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = NotificationDTO.class)
     private String notificationId;
-    @NotNull
     private NotificationStatus status;
-    @NotNull
     @Column(name = "notification_type")
     private NotificationType type;
+    @Size(max = 1024)
+    private String notes;
+
+    /**
+     * Get the value of notes
+     *
+     * @return the value of notes
+     */
+    public String getNotes() {
+        return notes;
+    }
+
+    /**
+     * Set the value of notes
+     *
+     * @param notes new value of notes
+     */
+    @PropertyListener
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     /**
      * Get the value of type
