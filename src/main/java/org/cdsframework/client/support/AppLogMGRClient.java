@@ -42,7 +42,7 @@ public class AppLogMGRClient extends BaseMGRClient<AppLogDTO, AppLogMGRRemote> i
     
     public AppLogMGRClient() {
         super(AppLogMGRClient.class);
-        // Set RemoteJNDI Reference because AppLogBO lives in mts-ejb-core-support
+        // Set RemoteJNDI Reference because AppLogBO lives in mts-ejb-core
         setRemoteJNDIReference("mts-ejb-core/AppLogMGR");
     }    
 

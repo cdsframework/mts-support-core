@@ -44,7 +44,7 @@ import org.cdsframework.enumeration.LogLevel;
  */
 @Entity
 @Table(databaseId = "MTS", name = "app_log")
-@JndiReference(root = "mts-ejb-core-support")
+@JndiReference(root = "mts-ejb-core")
 @Permission(name = "App Log")
 @ColumnSubstitutions({
     @Column(name = "last_mod_id", selectable = false, insertable = false, updateable = false),
