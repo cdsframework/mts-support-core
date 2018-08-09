@@ -46,7 +46,7 @@ import org.cdsframework.enumeration.GenerationSource;
  */
 @Entity
 @Table(databaseId = "MTS", name = "audit_transaction")
-@JndiReference(root = "mts-ejb-core-support")
+@JndiReference(root = "mts-ejb-core")
 @Permission(name = "Audit Transaction")
 @ColumnSubstitutions({
     @Column(name = "last_mod_id", selectable = false, insertable = false, updateable = false),
