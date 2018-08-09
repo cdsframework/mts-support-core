@@ -68,7 +68,7 @@ public class DTOsTest {
         Class[] classes = ClassUtils.getClasses("org.cdsframework.dto");
         for (Class clazz : classes) {
             if (BaseDTO.class.isAssignableFrom(clazz)) {
-                DTOUtils.performDTOClassValidation(clazz, "mts-ejb-core", "mts-ejb-core-support");
+                DTOUtils.performDTOClassValidation(clazz, "mts-ejb-core");
             }
         }
     }

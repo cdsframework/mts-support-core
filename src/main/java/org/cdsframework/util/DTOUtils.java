@@ -1779,36 +1779,6 @@ public class DTOUtils {
         }
     }
 
-    public static void performDTOClassValidation(Class dtoClass, String jndiRoot1, String jndiRoot2) {
-        System.out.println("Checking DTO: " + dtoClass.getCanonicalName());
-        JndiReference jndiReference = getJndiReference(dtoClass);
-        if (jndiReference == null) {
-            throw new IllegalStateException(dtoClass.getSimpleName() + " does not have a JndiReference annotation on it!");
-        }
-        if (!jndiReference.root().equals(jndiRoot1) && !jndiReference.root().equals(jndiRoot2)) {
-            throw new IllegalStateException(dtoClass.getSimpleName()
-                    + " JNDI root mismatch: expected " + jndiRoot1 + ", " + jndiRoot2 + " got " + jndiReference.root());
-        }
-        Permission permission = getPermission(dtoClass);
-        if (permission == null) {
-            throw new IllegalStateException(dtoClass.getSimpleName() + " does not have a Permission annotation");
-        }
-        Table table = getDtoTable(dtoClass);
-        if (table == null) {
-            logger.warn(dtoClass.getSimpleName() + " does not have a Table annotation");
-        }
-        boolean serialVersionUIDFound = false;
-        for (Field field : dtoClass.getDeclaredFields()) {
-            if ("serialVersionUID".equalsIgnoreCase(field.getName())) {
-                serialVersionUIDFound = true;
-                break;
-            }
-        }
-        if (!serialVersionUIDFound) {
-            throw new IllegalStateException(dtoClass.getSimpleName() + " does not have a serialVersionUID");
-        }
-    }
-
     // TODO: cache this
     public static Permission getPermission(Class<? extends BaseDTO> dtoClass) {
         return dtoClass.getAnnotation(Permission.class);

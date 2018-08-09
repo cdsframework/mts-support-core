@@ -49,7 +49,7 @@ import org.cdsframework.enumeration.GenerationSource;
  */
 @Entity
 @Table(databaseId = "MTS", name = "audit_log", alias = "al")
-@JndiReference(root = "mts-ejb-core-support")
+@JndiReference(root = "mts-ejb-core")
 @Permission(name = "Audit Log")
 @OrderByMapEntries({
     @OrderByMapEntry(sortFieldKey = "auditId", sortFieldValue = "al.audit_id"),
