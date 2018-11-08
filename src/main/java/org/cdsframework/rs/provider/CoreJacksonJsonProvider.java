@@ -43,7 +43,6 @@ import java.util.List;
 import org.cdsframework.base.BaseDTO;
 import org.cdsframework.rs.support.CoreConfiguration;
 import org.cdsframework.util.ClassUtils;
-import static org.cdsframework.util.ClassUtils.getClassesFromClasspath;
 import org.cdsframework.util.LogUtils;
 
 /**
