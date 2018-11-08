@@ -589,6 +589,20 @@ public class StringUtils {
     }
 
     /**
+     * Returns true if both arguments are null, or if both are not null, pS1.equals(pS2); otherwise returns false.
+     */
+    public static boolean isEqual(String pS1, String pS2) {
+
+        if (pS1 == null && pS2 == null) {
+            return true;
+        } else if (pS1 != null && pS2 != null) {
+            return pS1.equals(pS2);
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Check is a string is empty.
      *
      * @param p_input
