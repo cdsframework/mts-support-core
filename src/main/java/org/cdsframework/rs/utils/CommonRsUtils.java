@@ -51,7 +51,6 @@ import org.cdsframework.rs.provider.CoreJacksonJsonProvider;
 import org.cdsframework.util.DateUtils;
 import org.cdsframework.util.LogUtils;
 import org.cdsframework.util.StringUtils;
-import org.cdsframework.util.support.CoreConstants;
 import org.glassfish.jersey.message.internal.MessageBodyProviderNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
