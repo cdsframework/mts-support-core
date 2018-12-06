@@ -63,7 +63,7 @@ import org.cdsframework.util.DTOUtils;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.filter.EncodingFeature;
-import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.message.GZipEncoder;
 
@@ -191,7 +191,7 @@ public class RSClient {
         Client client = ClientBuilder.newClient()
                 .register(new JacksonFeature());
         if (loggingFilter) {
-            client.register(new LoggingFilter(logger, true));
+            client.register(new LoggingFeature(logger));
         }
         client.register(new CoreJacksonJsonProvider(jsonInclude));
         if (gzipSupport) {
