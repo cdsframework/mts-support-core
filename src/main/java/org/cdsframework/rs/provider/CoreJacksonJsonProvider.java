@@ -41,7 +41,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.cdsframework.base.BaseDTO;
-import org.cdsframework.rs.support.CoreConfiguration;
 import org.cdsframework.util.ClassUtils;
 import org.cdsframework.util.LogUtils;
 
@@ -56,7 +55,7 @@ public class CoreJacksonJsonProvider implements ContextResolver<ObjectMapper> {
     private ObjectMapper defaultObjectMapper = null;
 
     public CoreJacksonJsonProvider() {
-        this(CoreConfiguration.getJsonInclude());
+        this(JsonInclude.Include.NON_NULL);
     }    
 
     public CoreJacksonJsonProvider(JsonInclude.Include include) {
