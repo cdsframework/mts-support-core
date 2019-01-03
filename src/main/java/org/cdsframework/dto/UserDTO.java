@@ -89,6 +89,9 @@ public class UserDTO extends BaseDTO {
 
     public interface FindCatProxyUser {
     }
+    
+    public interface SetChangePassword {}
+    
     /**
      * The serializable class UID.
      */

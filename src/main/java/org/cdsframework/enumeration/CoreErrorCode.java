@@ -50,6 +50,7 @@ public enum CoreErrorCode {
     NotSupported(""),
     ParameterCanNotBeNull(""),
     PasswordInvalid(""),
+    PasswordCriteriaViolation(""),
     PasswordMismatch(""),
     SearchCriteriaIncomplete(""),
     TooMany(""),
