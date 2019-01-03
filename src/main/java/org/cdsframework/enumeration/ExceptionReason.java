@@ -62,6 +62,10 @@ public enum ExceptionReason
      */
     USER_EXPIRED,
     /**
+     * The user password must be changed
+     */
+    CHANGE_PASSWORD,
+    /**
      * Edit is not allowed.
      */
     EDIT_NOT_ALLOWED,

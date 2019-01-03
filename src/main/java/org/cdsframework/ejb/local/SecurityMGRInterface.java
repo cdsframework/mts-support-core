@@ -31,7 +31,10 @@ import org.cdsframework.base.BaseMGRRemote;
 import org.cdsframework.dto.SessionDTO;
 import org.cdsframework.exceptions.AuthenticationException;
 import org.cdsframework.exceptions.AuthorizationException;
+import org.cdsframework.exceptions.ConstraintViolationException;
 import org.cdsframework.exceptions.MtsException;
+import org.cdsframework.exceptions.NotFoundException;
+import org.cdsframework.exceptions.ValidationException;
 import org.cdsframework.security.PermissionObject;
 import org.cdsframework.security.UserSecuritySchemePermissionMap;
 
@@ -54,6 +57,25 @@ public interface SecurityMGRInterface extends BaseMGRRemote<SessionDTO> {
      */
     public boolean authenticate(String username, String password, String appName)
             throws AuthenticationException, AuthorizationException, MtsException;
+
+    /**
+     * Log a user into the middle tier and return a SessionDTO for method invocation.
+     *
+     * @param userName user login.
+     * @param currentPassword user current password.
+     * @param newPassword user new password.
+     * @param confirmPassword user confirm password.
+     * @return true = success; false = failure
+     * @throws AuthenticationException if current password is bad.
+     * @throws org.cdsframework.exceptions.AuthorizationException
+     * @throws org.cdsframework.exceptions.ConstraintViolationException
+     * @throws ValidationException if there are password vetting issues.
+     * @throws org.cdsframework.exceptions.NotFoundException
+     * @throws org.cdsframework.exceptions.MtsException
+     */
+    public boolean changePassword(String userName, String currentPassword, String newPassword, String confirmPassword)
+            throws AuthenticationException, AuthorizationException, ConstraintViolationException, ValidationException, NotFoundException, MtsException;
+
 
     /**
      * Log a user into the middle tier and return a SessionDTO for method invocation.

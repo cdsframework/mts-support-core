@@ -126,7 +126,7 @@ public class ObjectUtils {
                 retValue = (Long) oValue;
             }
             else if (oValue instanceof String) {
-                retValue = Long.valueOf((String) oValue);
+                retValue = Long.valueOf(((String) oValue).trim());
             }
             else if (oValue instanceof BigDecimal) {
                 retValue = ((BigDecimal) oValue).longValue();
@@ -154,7 +154,7 @@ public class ObjectUtils {
                 retValue = (Integer) oValue;
             }
             else if (oValue instanceof String) {
-                retValue = Integer.valueOf((String) oValue);
+                retValue = Integer.valueOf(((String) oValue).trim());
                 
             } else if (oValue instanceof Long) {
                 // Precision
@@ -246,7 +246,7 @@ public class ObjectUtils {
                 BigDecimal bigDecimal = (BigDecimal) object;
                 value = bigDecimal.floatValue();
             } else if (object instanceof String) {
-                value = Float.valueOf((String) object);
+                value = Float.valueOf(((String) object).trim());
             } else {
                 value = (Float) object;
             }
@@ -263,7 +263,7 @@ public class ObjectUtils {
             } else if (object instanceof Float) {
                 value = ((Float) object).doubleValue();
             } else if (object instanceof String) {
-                value = Double.valueOf((String) object);
+                value = Double.valueOf(((String) object).trim());
             } else {
                 value = (Double) object;
             }

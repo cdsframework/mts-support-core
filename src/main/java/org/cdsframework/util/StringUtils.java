@@ -1079,17 +1079,18 @@ public class StringUtils {
             retBool = false;
         }
         if (!StringUtils.isEmpty(booleanString)) {
-            if (booleanString.equalsIgnoreCase("y")) {
+            final String bString = booleanString.trim();
+            if (bString.equalsIgnoreCase("y")) {
                 retBool = true;
-            } else if (booleanString.equalsIgnoreCase("n")) {
+            } else if (bString.equalsIgnoreCase("n")) {
                 retBool = false;
-            } else if (booleanString.equalsIgnoreCase("true")) {
+            } else if (bString.equalsIgnoreCase("true")) {
                 retBool = true;
-            } else if (booleanString.equalsIgnoreCase("false")) {
+            } else if (bString.equalsIgnoreCase("false")) {
                 retBool = false;
-            } else if (booleanString.equalsIgnoreCase("1")) {
+            } else if (bString.equalsIgnoreCase("1")) {
                 retBool = true;
-            } else if (booleanString.equalsIgnoreCase("0")) {
+            } else if (bString.equalsIgnoreCase("0")) {
                 retBool = false;
             }
             else {
