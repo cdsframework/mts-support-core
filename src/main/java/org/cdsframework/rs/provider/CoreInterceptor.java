@@ -7,22 +7,25 @@
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU
  * Lesser General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version. You should have received a copy of the GNU Lesser
- * General Public License along with this program. If not, see <http://www.gnu.org/licenses/> for more
- * details.
+ * General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/> for more details.
  *
- * The above-named contributors (HLN Consulting, LLC) are also licensed by the New York City
- * Department of Health and Mental Hygiene, Bureau of Immunization to have (without restriction,
- * limitation, and warranty) complete irrevocable access and rights to this project.
+ * The above-named contributors (HLN Consulting, LLC) are also licensed by the
+ * New York City Department of Health and Mental Hygiene, Bureau of Immunization
+ * to have (without restriction, limitation, and warranty) complete irrevocable
+ * access and rights to this project.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; THE
- * SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING,
- * BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS, IF ANY, OR DEVELOPERS BE LIABLE FOR
- * ANY CLAIM, DAMAGES, OR OTHER LIABILITY OF ANY KIND, ARISING FROM, OUT OF, OR IN CONNECTION WITH
- * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+ * EVENT SHALL THE COPYRIGHT HOLDERS, IF ANY, OR DEVELOPERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES, OR OTHER LIABILITY OF ANY KIND, ARISING FROM, OUT OF, OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * For more information about this software, see https://www.hln.com/services/open-source/ or send
- * correspondence to ice@hln.com.
+ * For more information about this software, see
+ * https://www.hln.com/services/open-source/ or send correspondence to
+ * ice@hln.com.
  */
 package org.cdsframework.rs.provider;
 
@@ -32,6 +35,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ResourceInfo;
@@ -58,10 +62,10 @@ public class CoreInterceptor implements ReaderInterceptor, WriterInterceptor {
 
     @Context
     private ResourceInfo resourceInfo;
-    
+
     @Context
     private HttpServletRequest httpServletRequest;
-    
+
     @Override
     public void aroundWriteTo(WriterInterceptorContext writerInterceptorContext) throws IOException, WebApplicationException {
         final String METHODNAME = "aroundWriteTo ";
@@ -75,36 +79,36 @@ public class CoreInterceptor implements ReaderInterceptor, WriterInterceptor {
         if (acceptEncoding != null && acceptEncoding.contains("gzip")) {
             final OutputStream outputStream = writerInterceptorContext.getOutputStream();
             writerInterceptorContext.setOutputStream(new GZIPOutputStream(outputStream));
-            writerInterceptorContext.getHeaders().putSingle("Content-Encoding", "gzip"); 
+            writerInterceptorContext.getHeaders().putSingle("Content-Encoding", "gzip");
         }
         writerInterceptorContext.proceed();
     }
-    
+
     @Override
     public Object aroundReadFrom(ReaderInterceptorContext readerInterceptorContext) throws IOException, WebApplicationException {
         final String METHODNAME = "aroundReadFrom ";
-        
-//        List<String> contentEncoding = readerInterceptorContext.getHeaders().get("Content-Encoding");
+
+        List<String> contentEncoding = readerInterceptorContext.getHeaders().get("Content-Encoding");
 //        logger.debug(METHODNAME, "contentEncoding=", contentEncoding);
-        List<String> acceptEncoding = readerInterceptorContext.getHeaders().get("Accept-Encoding");
+//        List<String> acceptEncoding = readerInterceptorContext.getHeaders().get("Accept-Encoding");
 //        logger.debug(METHODNAME, "acceptEncoding=", acceptEncoding);
 
         // If the request header indicates that context-encoding gziped, its decompressed
-        if (acceptEncoding != null && acceptEncoding.contains("gzip")) {
+        if (contentEncoding != null && contentEncoding.contains("gzip")) {
 //            logger.debug(METHODNAME, "context decompressed");
             readerInterceptorContext.setInputStream(new GZIPInputStream(readerInterceptorContext.getInputStream()));
         }
 
         StringBuffer requestURL = httpServletRequest.getRequestURL();
-        logger.debug(METHODNAME, "requestURL=", requestURL);                
+        logger.debug(METHODNAME, "requestURL=", requestURL);
         String requestURI = httpServletRequest.getRequestURI();
 
-        if (requestURI.contains(CoreRsConstants.GENERAL_RS_ROOT)) {        
+        if (requestURI.contains(CoreRsConstants.GENERAL_RS_ROOT)) {
             String method = httpServletRequest.getMethod();
             if (!method.equalsIgnoreCase("GET")) {
                 boolean byPass = false;
                 logger.debug(METHODNAME, "CoreRsConstants.BYPASSINTERCEPTOR=", CoreRsConstants.BYPASSINTERCEPTOR);
-                
+
                 if (CoreRsConstants.BYPASSINTERCEPTOR != null) {
                     for (String byPassInterceptor : CoreRsConstants.BYPASSINTERCEPTOR) {
                         if (requestURI.contains(byPassInterceptor)) {
@@ -114,19 +118,19 @@ public class CoreInterceptor implements ReaderInterceptor, WriterInterceptor {
                     }
                 }
                 logger.debug(METHODNAME, "byPass=", byPass);
-                
+
                 if (!byPass) {
                     String resourceName = ResourceUtil.getResourceNameFromPath(httpServletRequest.getPathInfo());
                     logger.debug(METHODNAME, "resourceName=", resourceName);
 
                     // For just the general rs service we need to parse out the resourceName from the path
                     try {
-                        String json = IOUtils.toString(readerInterceptorContext.getInputStream()); 
-    //                    logger.debug(METHODNAME, "json=", json);
+                        String json = IOUtils.toString(readerInterceptorContext.getInputStream());
+                        //                    logger.debug(METHODNAME, "json=", json);
                         // Add the resource to the json string for the deserializer
                         json = ResourceUtil.addResourceName(resourceName, json);
                         // Convert the entity back and store it
-                        InputStream inputStream = IOUtils.toInputStream(json);            
+                        InputStream inputStream = IOUtils.toInputStream(json);
                         readerInterceptorContext.setInputStream(inputStream);
                     } catch (JSONException ex) {
                         logger.error(METHODNAME, ex);
@@ -136,5 +140,5 @@ public class CoreInterceptor implements ReaderInterceptor, WriterInterceptor {
         }
         return readerInterceptorContext.proceed();
     }
-    
+
 }
