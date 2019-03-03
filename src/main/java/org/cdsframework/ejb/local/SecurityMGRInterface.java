@@ -59,10 +59,11 @@ public interface SecurityMGRInterface extends BaseMGRRemote<SessionDTO> {
             throws AuthenticationException, AuthorizationException, MtsException;
 
     /**
-     * Log a user into the middle tier and return a SessionDTO for method invocation.
+     * Change a user's password..
      *
      * @param userName user login.
      * @param currentPassword user current password.
+     * @param passwordToken
      * @param newPassword user new password.
      * @param confirmPassword user confirm password.
      * @return true = success; false = failure
@@ -73,9 +74,23 @@ public interface SecurityMGRInterface extends BaseMGRRemote<SessionDTO> {
      * @throws org.cdsframework.exceptions.NotFoundException
      * @throws org.cdsframework.exceptions.MtsException
      */
-    public boolean changePassword(String userName, String currentPassword, String newPassword, String confirmPassword)
+    public boolean changePassword(String userName, String currentPassword, String passwordToken, String newPassword, String confirmPassword)
             throws AuthenticationException, AuthorizationException, ConstraintViolationException, ValidationException, NotFoundException, MtsException;
 
+    /**
+     * User forgot password.
+     *
+     * @param userName user login.
+     * @return true = success; false = failure
+     * @throws AuthenticationException if current password is bad.
+     * @throws org.cdsframework.exceptions.AuthorizationException
+     * @throws org.cdsframework.exceptions.ConstraintViolationException
+     * @throws ValidationException if there are password vetting issues.
+     * @throws org.cdsframework.exceptions.NotFoundException
+     * @throws org.cdsframework.exceptions.MtsException
+     */
+    public boolean forgotPassword(String userName)
+            throws AuthenticationException, AuthorizationException, ConstraintViolationException, ValidationException, NotFoundException, MtsException;
 
     /**
      * Log a user into the middle tier and return a SessionDTO for method invocation.

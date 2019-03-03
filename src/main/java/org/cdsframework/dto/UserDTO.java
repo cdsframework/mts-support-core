@@ -81,6 +81,9 @@ public class UserDTO extends BaseDTO {
     public interface UpdatePasswordHash {
     }
 
+    public interface UpdatePasswordToken {
+    }
+
     public interface FailedLoginAttemptsByUserId {
     }
 
@@ -183,6 +186,68 @@ public class UserDTO extends BaseDTO {
     private Map<String, Object> propertyMap = null;
     @Size(max = 14)
     private String phone;
+
+    @Size(max = 128)
+    private String passwordToken;
+    private Date tokenExpiration;
+    private boolean sendInitialEmail;
+
+    /**
+     * Get the value of sendInitialEmail
+     *
+     * @return the value of sendInitialEmail
+     */
+    public boolean isSendInitialEmail() {
+        return sendInitialEmail;
+    }
+
+    /**
+     * Set the value of sendInitialEmail
+     *
+     * @param sendInitialEmail new value of sendInitialEmail
+     */
+    @PropertyListener
+    public void setSendInitialEmail(boolean sendInitialEmail) {
+        this.sendInitialEmail = sendInitialEmail;
+    }
+
+    /**
+     * Get the value of tokenExpiration
+     *
+     * @return the value of tokenExpiration
+     */
+    public Date getTokenExpiration() {
+        return tokenExpiration;
+    }
+
+    /**
+     * Set the value of tokenExpiration
+     *
+     * @param tokenExpiration new value of tokenExpiration
+     */
+    @PropertyListener
+    public void setTokenExpiration(Date tokenExpiration) {
+        this.tokenExpiration = tokenExpiration;
+    }
+
+    /**
+     * Get the value of passwordToken
+     *
+     * @return the value of passwordToken
+     */
+    public String getPasswordToken() {
+        return passwordToken;
+    }
+
+    /**
+     * Set the value of passwordToken
+     *
+     * @param passwordToken new value of passwordToken
+     */
+    @PropertyListener
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
+    }
 
     /**
      * Get the value of phone
