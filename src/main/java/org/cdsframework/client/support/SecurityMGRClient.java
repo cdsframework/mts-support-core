@@ -96,8 +96,14 @@ public class SecurityMGRClient extends BaseMGRClient<SessionDTO, SecurityMGRRemo
     }
 
     @Override
-    public boolean changePassword(String userName, String currentPassword, String newPassword, String confirmPassword)
+    public boolean changePassword(String userName, String currentPassword, String passwordToken, String newPassword, String confirmPassword)
             throws AuthenticationException, AuthorizationException, ConstraintViolationException, ValidationException, NotFoundException, MtsException {
-        return (Boolean) mtsInvokeAddUpdate("changePassword", userName, currentPassword, newPassword, confirmPassword);
+        return (Boolean) mtsInvokeAddUpdate("changePassword", userName, currentPassword, passwordToken, newPassword, confirmPassword);
+    }
+
+    @Override
+    public boolean forgotPassword(String userName)
+            throws AuthenticationException, AuthorizationException, ConstraintViolationException, ValidationException, NotFoundException, MtsException {
+        return (Boolean) mtsInvokeAddUpdate("forgotPassword", userName);
     }
 }

@@ -87,7 +87,7 @@ public class SystemPropertyDTO extends BaseDTO {
     @Size(max = 128)
     @NotNull
     private String scope;
-    @Size(max = 1024)
+    @Size(max = 4096)
     private String value;
     private boolean obscure;
     private boolean mtsOnly = true;
