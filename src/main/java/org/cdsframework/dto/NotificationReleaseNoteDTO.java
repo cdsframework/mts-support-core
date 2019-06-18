@@ -26,13 +26,18 @@
  */
 package org.cdsframework.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
 import org.cdsframework.annotation.JndiReference;
+import org.cdsframework.annotation.ParentChildRelationship;
+import org.cdsframework.annotation.ParentChildRelationships;
 import org.cdsframework.annotation.Permission;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
@@ -43,8 +48,11 @@ import org.cdsframework.enumeration.GenerationSource;
  *
  * @author sdn
  */
+@ParentChildRelationships({
+    @ParentChildRelationship(childDtoClass = NotificationReleaseNoteFileDTO.class, childQueryClass = NotificationReleaseNoteFileDTO.ByNoteId.class, isAutoRetrieve = false)
+})
 @Entity
-@Table(databaseId = "MTS", name = "notification_release_note")
+@Table(databaseId = "MTS", name = "notification_release_note", view = "vw_notification_release_note")
 @JndiReference(root = "mts-ejb-core")
 @Permission(name = "Notification Release Note")
 @XmlRootElement(name = "NotificationReleaseNote")
@@ -69,6 +77,37 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
     private String description;
     @Size(max = 4096)
     private String reason;
+    @Size(max = 1024)
+    private String url;
+    @Column(name = "file_count", insertable = false, updateable = false)
+    private int fileCount;
+
+    public int getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(int fileCount) {
+        this.fileCount = fileCount;
+    }
+
+    /**
+     * Get the value of url
+     *
+     * @return the value of url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Set the value of url
+     *
+     * @param url new value of url
+     */
+    @PropertyListener
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     /**
      * Get the value of reason
@@ -84,6 +123,7 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
      *
      * @param reason new value of reason
      */
+    @PropertyListener
     public void setReason(String reason) {
         this.reason = reason;
     }
@@ -102,6 +142,7 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
      *
      * @param description new value of description
      */
+    @PropertyListener
     public void setDescription(String description) {
         this.description = description;
     }
@@ -120,6 +161,7 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
      *
      * @param title new value of title
      */
+    @PropertyListener
     public void setTitle(String title) {
         this.title = title;
     }
@@ -160,6 +202,11 @@ public class NotificationReleaseNoteDTO extends BaseDTO {
     @PropertyListener
     public void setNoteId(String noteId) {
         this.noteId = noteId;
+    }
+
+    @XmlElementRef(name = "notificationReleaseNoteFiles")
+    public List<NotificationReleaseNoteFileDTO> getNotificationReleaseNoteFileDTOs() {
+        return (List) this.getChildrenDTOs(NotificationReleaseNoteFileDTO.ByNoteId.class);
     }
 
 }
