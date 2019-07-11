@@ -55,6 +55,11 @@ import org.glassfish.jersey.message.internal.MessageBodyProviderNotFoundExceptio
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.security.GeneralSecurityException;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /*
  * Copyright (C) 2015 New York City Department of Health and Mental Hygiene, Bureau of Immunization
@@ -357,4 +362,29 @@ public class CommonRsUtils {
         return parameters;
     }
     
+    public static SSLContext getSSLContext() {
+        // for alternative implementation checkout org.glassfish.jersey.SslConfigurator
+        TrustManager x509 = new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws java.security.cert.CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws java.security.cert.CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+        };
+        SSLContext ctx = null;
+        try {
+            ctx = SSLContext.getInstance("SSL");
+            ctx.init(null, new TrustManager[]{x509}, null);
+        } catch (GeneralSecurityException ex) {
+        }
+        return ctx;
+    }
+
 }
