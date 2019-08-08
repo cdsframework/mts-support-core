@@ -54,7 +54,7 @@ import org.cdsframework.enumeration.GenerationSource;
  */
 @Entity
 @RowsReturnCountBehavior(isDeleteCountIgnored = true)
-@Table(databaseId = "MTSINT", name = "mt_session")
+@Table(databaseId = "MTS", name = "mt_session")
 @JndiReference(root = "mts-ejb-core", remote = "SecurityMGR!org.cdsframework.ejb.remote.SecurityMGRRemote")
 @Permission(name = "Session")
 @XmlRootElement(name = "Session")
