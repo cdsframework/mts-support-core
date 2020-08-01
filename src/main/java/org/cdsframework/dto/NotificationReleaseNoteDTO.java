@@ -36,6 +36,7 @@ import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
 import org.cdsframework.annotation.JndiReference;
+import org.cdsframework.annotation.OrderBy;
 import org.cdsframework.annotation.ParentChildRelationship;
 import org.cdsframework.annotation.ParentChildRelationships;
 import org.cdsframework.annotation.Permission;
@@ -56,6 +57,7 @@ import org.cdsframework.enumeration.GenerationSource;
 @JndiReference(root = "mts-ejb-core")
 @Permission(name = "Notification Release Note")
 @XmlRootElement(name = "NotificationReleaseNote")
+@OrderBy(fields = "lower(title)")
 public class NotificationReleaseNoteDTO extends BaseDTO {
 
     private static final long serialVersionUID = 2179953959501351478L;
