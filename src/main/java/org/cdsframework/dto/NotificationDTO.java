@@ -89,6 +89,26 @@ public class NotificationDTO extends BaseDTO {
     private String messageTitle;
     @Size(max = 4096)
     private String messageBody;
+    private byte[] payload;
+
+    /**
+     * Get the value of payload
+     *
+     * @return the value of payload
+     */
+    public byte[] getPayload() {
+        return payload;
+    }
+
+    /**
+     * Set the value of payload
+     *
+     * @param payload new value of payload
+     */
+    @PropertyListener
+    public void setPayload(byte[] payload) {
+        this.payload = payload;
+    }
 
 
     /**
