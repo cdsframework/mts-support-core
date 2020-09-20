@@ -111,6 +111,26 @@ public class NotificationStateDTO extends BaseDTO {
     private String notificationId;
     @Column(name = "update_time", insertable = false, updateable = false, selectable = true)
     private Date updateTime;
+    @Column(name = "payload", insertable = false, updateable = false, selectable = true)
+    private byte[] payload;
+
+    /**
+     * Get the value of payload
+     *
+     * @return the value of payload
+     */
+    public byte[] getPayload() {
+        return payload;
+    }
+
+    /**
+     * Set the value of payload
+     *
+     * @param payload new value of payload
+     */
+    public void setPayload(byte[] payload) {
+        this.payload = payload;
+    }
 
     /**
      * Get the value of updateTime
